@@ -50,7 +50,7 @@ bool load_gr_files(std::vector<std::string> gr_files, std::vector<Edge> &edges_o
         }
 
         if (std::strcmp(type.c_str(),"a") == 0) { //arc
-          if (idx_edge < (int)edges_out.size() - 1){
+            if (idx_edge < (int)edges_out.size()){
             if (
                 (stoul(decomposed_line[1]) != edges_out[idx_edge].source) ||
                 (stoul(decomposed_line[2]) != edges_out[idx_edge].target)) {

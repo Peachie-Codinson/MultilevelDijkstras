@@ -18,6 +18,7 @@
 #include<boost/tokenizer.hpp>
 
 #include "RApexSearch.h"
+#include "MultiLevelDijkstra.h"
 
 #include "RulebookPlanning/Rulebook.h"
 #include "RulebookPlanning/RulebookCost.h"
@@ -165,6 +166,51 @@ void run_query(size_t graph_size, std::vector<Edge> & edges, std::string query_f
     planning_rulebook.build();
     rapex_rb_graph.calculate_quotient_graph();
 
+    std::vector<size_t> multi_level_order;
+    bool multi_level_fork = false;
+    if (algorithm == "MultiLevel") {
+        multi_level_fork = planning_rulebook.getNumRules() == 3 &&
+            planning_rulebook.isAllSingletons() &&
+            planning_rulebook.getSuccessors(0) == std::unordered_set<size_t>{1, 2} &&
+            planning_rulebook.getSuccessors(1).empty() &&
+            planning_rulebook.getSuccessors(2).empty();
+        if (!multi_level_fork && !planning_rulebook.isTotallyOrdered())
+            throw std::invalid_argument("MultiLevel supports a strict chain or r0 > {r1,r2}; use RBExact for other rulebooks");
+        if (!multi_level_fork)
+            for (const auto& rule_class : planning_rulebook)
+                multi_level_order.push_back(*rule_class.begin());
+    }
+
+    if (algorithm == "MultiLevel") {
+        size_t query_count = 0;
+        for (const auto& [source, target] : queries) {
+            ++query_count;
+            auto result = multi_level_fork
+                ? multi_level::solve_fork(edges, graph_size, source, target, time_limit)
+                : multi_level::solve(edges, graph_size, source, target,
+                                     multi_level_order, time_limit);
+            const std::string path = output_file + ".q" + std::to_string(query_count) + ".edges";
+            if (result.reachable) multi_level::write_subgraph(path, edges, result);
+            const std::string solutions_path = output_file + ".q" + std::to_string(query_count) + ".solutions.txt";
+            std::ofstream solutions_out(solutions_path);
+            if (!solutions_out) throw std::runtime_error("cannot write " + solutions_path);
+            for (const auto& cost : result.solutions)
+                solutions_out << cost[0] << ' ' << cost[1] << ' ' << cost[2] << '\n';
+            std::cout << "Query " << query_count << ": "
+                      << (result.timed_out ? "timed out" : result.reachable ? "optimal" : "unreachable")
+                      << ", edges=" << result.optimal_edges.size() << ", cost=[";
+            for (size_t i = 0; i < result.cost.size(); ++i)
+                std::cout << (i ? ", " : "") << result.cost[i];
+            std::cout << "]\n";
+            stats << "MultiLevel\t" << source << '\t' << target << '\t'
+                  << result.solutions.size() << '\t' << result.seconds << '\t'
+                  << result.optimal_edges.size() << '\t'
+                  << (result.reachable ? path : "-") << '\t' << solutions_path
+                  << '\t' << (result.timed_out ? "TIMEOUT" : "COMPLETE") << '\n';
+        }
+        return;
+    }
+
     // Build the graph for Rulebook Planning
     RulebookCost::setRulebook(planning_rulebook);
     WeightedGraph<RulebookCost> planning_graph;
@@ -220,7 +266,7 @@ int main(int argc, char** argv){
         ("rules,r", po::value<std::string>()->default_value(""), "rules file")
         ("map,m",po::value< std::vector<std::string> >(&objective_files)->multitoken(), "files for edge weight")
         ("merge", po::value<std::string>()->default_value(""), "strategy for merging apex node pair: SMALLER_G2, RANDOM or MORE_SLACK")
-        ("algorithm,a", po::value<std::string>()->default_value("RApex"), "solvers (BOA, PPA, Apex, RBExact, RBApprox, RApex, or RApexNoDr)")
+        ("algorithm,a", po::value<std::string>()->default_value("RApex"), "solvers (BOA, PPA, Apex, RBExact, RBApprox, RApex, RApexNoDr, MultiLevel)")
         ("cutoffTime,t", po::value<int>()->default_value(300), "cutoff time (seconds)")
         ("output,o", po::value<std::string>()->required(), "Name of the output file")
         ("logging_file", po::value<std::string>()->default_value(""), "logging file" )
@@ -274,7 +320,8 @@ int main(int argc, char** argv){
     MergeStrategy ms = DEFAULT_MERGE_STRATEGY;
     alg_variant = vm["merge"].as<std::string>();
 
-    if (vm["merge"].as<std::string>() != "" && vm["algorithm"].as<std::string>()!= "Apex"){
+    if (vm["merge"].as<std::string>() != "" && vm["algorithm"].as<std::string>() != "Apex" &&
+        vm["algorithm"].as<std::string>() != "RApex" && vm["algorithm"].as<std::string>() != "RApexNoDr"){
         alg_variant = "";
         std::cout << "WARNING: merge strategy with non-apex search" << std::endl;
     }else if(vm["merge"].as<std::string>() == "SMALLER_G2"){
@@ -287,7 +334,7 @@ int main(int argc, char** argv){
         ms = MergeStrategy::MORE_SLACK;
     }else if(vm["merge"].as<std::string>() == "REVERSE_LEX"){
         ms = MergeStrategy::REVERSE_LEX;
-    }else{
+    }else if(vm["merge"].as<std::string>() != ""){
         std::cerr << "unknown merge strategy" << std::endl;
     }
 

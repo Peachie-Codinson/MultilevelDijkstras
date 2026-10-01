@@ -1,0 +1,110 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "GNU",
+	"compiler-simulate-id" : "",
+	"config" : "",
+	"cxx-modules" : {},
+	"database-info" : null,
+	"dir-cur-bld" : "C:/CPP_Projects/Rulebook_approximation/build",
+	"dir-cur-src" : "C:/CPP_Projects/Rulebook_approximation",
+	"dir-top-bld" : "C:/CPP_Projects/Rulebook_approximation/build",
+	"dir-top-src" : "C:/CPP_Projects/Rulebook_approximation",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"C:\\CPP_Projects\\Rulebook_approximation\\inc"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "C:/CPP_Projects/Rulebook_approximation/build/CMakeFiles/multiobj.dir",
+	"sources" : 
+	{
+		"CMakeFiles/multiobj.dir/src/BiCriteria/AbstractSolver.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/BiCriteria/AbstractSolver.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/BiCriteria/ApexSearch.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/BiCriteria/ApexSearch.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/BiCriteria/BOAStar.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/BiCriteria/BOAStar.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/BiCriteria/DominanceChecker.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/BiCriteria/DominanceChecker.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/BiCriteria/NAMOA.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/BiCriteria/NAMOA.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/BiCriteria/PPA.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/BiCriteria/PPA.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/BiCriteria/RApexSearch.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/BiCriteria/RApexSearch.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/BiCriteria/ShortestPathHeuristic.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/BiCriteria/ShortestPathHeuristic.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/BiCriteria/SingleCriteria.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/BiCriteria/SingleCriteria.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/Utils/Definitions.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/Utils/Definitions.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/Utils/IOUtils.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/Utils/IOUtils.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/Utils/Logger.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/Utils/Logger.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/Utils/MapQueue.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/Utils/MapQueue.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/Utils/RulebookGraph.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/Utils/RulebookGraph.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/Utils/apex.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/Utils/apex.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/Utils/realization_pair.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/Utils/realization_pair.cpp"
+		},
+		"CMakeFiles/multiobj.dir/src/driver.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/CPP_Projects/Rulebook_approximation/src/driver.cpp"
+		}
+	}
+}

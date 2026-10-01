@@ -1,5 +1,5 @@
 #include "Utils/RulebookGraph.h"
-
+#include <algorithm>
 #include <cassert>
 
 // runs depth first search starting at vertex v.

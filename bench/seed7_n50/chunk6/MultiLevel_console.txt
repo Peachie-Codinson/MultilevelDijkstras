@@ -1,0 +1,11 @@
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-d.BAY.gr
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-t.BAY.gr
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-3.BAY.gr
+Graph Size: 321270
+Query 1: optimal, edges=281, cost=[448370, 0, 0]
+Query 2: optimal, edges=191, cost=[479159, 0, 0]
+Query 3: optimal, edges=487, cost=[926505, 0, 0]
+Query 4: optimal, edges=641, cost=[1590173, 0, 0]
+Query 5: optimal, edges=648, cost=[2091451, 0, 0]
+Query 6: optimal, edges=97, cost=[306189, 0, 0]
+

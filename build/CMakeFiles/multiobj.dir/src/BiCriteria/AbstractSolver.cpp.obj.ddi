@@ -1,0 +1,11 @@
+{
+"rules": [
+{
+"primary-output": "CMakeFiles\\multiobj.dir\\src\\BiCriteria\\AbstractSolver.cpp.obj",
+"requires": [
+]
+}
+],
+"version": 0,
+"revision": 0
+}

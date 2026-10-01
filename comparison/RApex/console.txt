@@ -1,0 +1,13 @@
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-d.BAY.gr
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-t.BAY.gr
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-3.BAY.gr
+Graph Size: 321270
+Started Query: 1/1
+Start Computing Heuristic
+Finish Computing Heuristic
+
+Node expansion: 60578
+Runtime: 2.065
+{"id": 37658, "parent": -1, "cost_until_now": [868224, 1486125, 865490], "heuristic_cost": [0, 0, 0], "full_cost": [868224, 1486125, 865490]}
+-----End Single Example-----
+

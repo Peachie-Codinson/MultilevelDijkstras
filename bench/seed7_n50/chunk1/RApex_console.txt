@@ -1,0 +1,53 @@
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-d.BAY.gr
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-t.BAY.gr
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-3.BAY.gr
+Graph Size: 321270
+Started Query: 1/6
+Start Computing Heuristic
+Finish Computing Heuristic
+
+Node expansion: 52603
+Runtime: 1.99
+{"id": 45062, "parent": -1, "cost_until_now": [544730, 1118230, 608566], "heuristic_cost": [0, 0, 0], "full_cost": [544730, 1118230, 608566]}
+-----End Single Example-----
+Started Query: 2/6
+Start Computing Heuristic
+Finish Computing Heuristic
+
+Node expansion: 1149
+Runtime: 0.101
+{"id": 219243, "parent": -1, "cost_until_now": [157667, 238019, 144580], "heuristic_cost": [0, 0, 0], "full_cost": [157667, 238019, 144580]}
+-----End Single Example-----
+Started Query: 3/6
+Start Computing Heuristic
+Finish Computing Heuristic
+
+Node expansion: 168192
+Runtime: 8.235
+{"id": 126177, "parent": -1, "cost_until_now": [1345390, 2674428, 1473689], "heuristic_cost": [0, 0, 0], "full_cost": [1345390, 2674428, 1473689]}
+-----End Single Example-----
+Started Query: 4/6
+Start Computing Heuristic
+Finish Computing Heuristic
+
+Node expansion: 30578
+Runtime: 1.49
+{"id": 288908, "parent": -1, "cost_until_now": [832061, 1354162, 800232], "heuristic_cost": [0, 0, 0], "full_cost": [832061, 1354162, 800232]}
+-----End Single Example-----
+Started Query: 5/6
+Start Computing Heuristic
+Finish Computing Heuristic
+
+Node expansion: 8562
+Runtime: 0.416
+{"id": 30991, "parent": -1, "cost_until_now": [339722, 636705, 355033], "heuristic_cost": [0, 0, 0], "full_cost": [339722, 636705, 355033]}
+-----End Single Example-----
+Started Query: 6/6
+Start Computing Heuristic
+Finish Computing Heuristic
+
+Node expansion: 66197
+Runtime: 2.267
+{"id": 64908, "parent": -1, "cost_until_now": [805339, 1650089, 895967], "heuristic_cost": [0, 0, 0], "full_cost": [805339, 1650089, 895967]}
+-----End Single Example-----
+

@@ -1,0 +1,203 @@
+diff --git a/inc/MultiLevelDijkstra.h b/inc/MultiLevelDijkstra.h
+new file mode 100644
+index 0000000..3bc6c90
+--- /dev/null
++++ b/inc/MultiLevelDijkstra.h
+@@ -0,0 +1,119 @@
++#pragma once
++
++// Slutsky et al., Iterated Dijkstra Propagation (Algorithms 1 and 2).
++// Exact for a strict total order of additive, nonnegative objectives.
++// The surviving edge set compactly represents every optimal s-t path.
++#include <algorithm>
++#include <chrono>
++#include <fstream>
++#include <limits>
++#include <queue>
++#include <stdexcept>
++#include <string>
++#include <utility>
++#include <vector>
++
++#include <Utils/Definitions.h>
++
++namespace multi_level {
++
++struct Result {
++    std::vector<size_t> cost;
++    std::vector<size_t> optimal_edges; // indices into the input edge vector
++    bool reachable = false;
++    bool timed_out = false;
++    double seconds = 0;
++};
++
++inline Result solve(const std::vector<Edge>& edges, size_t vertex_count,
++                    size_t source, size_t target,
++                    const std::vector<size_t>& priority_order,
++                    double timeout_seconds) {
++    using Clock = std::chrono::steady_clock;
++    const auto begin = Clock::now();
++    const size_t inf = std::numeric_limits<size_t>::max();
++    if (source > vertex_count || target > vertex_count || priority_order.empty())
++        throw std::invalid_argument("invalid query or empty priority order");
++    const size_t n = vertex_count + 1; // DIMACS vertices are 1-based
++    std::vector<std::vector<size_t>> outgoing(n), incoming(n);
++    for (size_t i = 0; i < edges.size(); ++i) {
++        const auto& e = edges[i];
++        if (e.source >= n || e.target >= n || e.cost.size() != priority_order.size())
++            throw std::invalid_argument("edge vertex or objective count mismatch");
++        outgoing[e.source].push_back(i);
++        incoming[e.target].push_back(i);
++    }
++    std::vector<char> active(edges.size(), 1);
++    auto distance = [&](size_t start, size_t rule, bool reverse) {
++        std::vector<size_t> dist(n, inf);
++        using Item = std::pair<size_t, size_t>;
++        std::priority_queue<Item, std::vector<Item>, std::greater<Item>> queue;
++        dist[start] = 0;
++        queue.push({0, start});
++        while (!queue.empty()) {
++            const auto [d, v] = queue.top();
++            queue.pop();
++            if (d != dist[v]) continue;
++            for (size_t i : reverse ? incoming[v] : outgoing[v]) {
++                if (!active[i]) continue;
++                const Edge& e = edges[i];
++                const size_t next = reverse ? e.source : e.target;
++                if (e.cost[rule] > inf - d) throw std::overflow_error("path cost overflow");
++                const size_t candidate = d + e.cost[rule];
++                if (candidate < dist[next]) {
++                    dist[next] = candidate;
++                    queue.push({candidate, next});
++                }
++            }
++        }
++        return dist;
++    };
++
++    Result result;
++    result.cost.assign(priority_order.size(), 0);
++    result.reachable = true;
++    for (size_t rule : priority_order) {
++        if (rule >= priority_order.size())
++            throw std::invalid_argument("rule id outside the objective vector");
++        if (timeout_seconds > 0 &&
++            std::chrono::duration<double>(Clock::now() - begin).count() >= timeout_seconds) {
++            result.timed_out = true;
++            result.reachable = false;
++            break;
++        }
++        auto from_source = distance(source, rule, false);
++        auto to_target = distance(target, rule, true);
++        const size_t optimum = from_source[target];
++        if (optimum == inf) { result.reachable = false; break; }
++        result.cost[rule] = optimum;
++        for (size_t i = 0; i < edges.size(); ++i) {
++            if (!active[i]) continue;
++            const auto& e = edges[i];
++            if (from_source[e.source] == inf || to_target[e.target] == inf ||
++                from_source[e.source] > optimum ||
++                e.cost[rule] > optimum - from_source[e.source] ||
++                to_target[e.target] > optimum - from_source[e.source] - e.cost[rule] ||
++                from_source[e.source] + e.cost[rule] + to_target[e.target] != optimum)
++                active[i] = 0;
++        }
++    }
++    if (result.reachable)
++        for (size_t i = 0; i < edges.size(); ++i)
++            if (active[i]) result.optimal_edges.push_back(i);
++    result.seconds = std::chrono::duration<double>(Clock::now() - begin).count();
++    return result;
++}
++
++inline void write_subgraph(const std::string& path, const std::vector<Edge>& edges,
++                           const Result& result) {
++    std::ofstream out(path);
++    if (!out) throw std::runtime_error("cannot write optimal subgraph: " + path);
++    out << "c Edges on all optimal paths; costs follow input objective order\n";
++    for (size_t i : result.optimal_edges) {
++        const auto& e = edges[i];
++        out << "a " << e.source << ' ' << e.target;
++        for (size_t cost : e.cost) out << ' ' << cost;
++        out << '\n';
++    }
++}
++} // namespace multi_level
+diff --git a/src/driver.cpp b/src/driver.cpp
+index 73f7c31..c83246c 100644
+--- a/src/driver.cpp
++++ b/src/driver.cpp
+@@ -18,6 +18,7 @@
+ #include<boost/tokenizer.hpp>
+ 
+ #include "RApexSearch.h"
++#include "MultiLevelDijkstra.h"
+ 
+ #include "RulebookPlanning/Rulebook.h"
+ #include "RulebookPlanning/RulebookCost.h"
+@@ -165,6 +166,37 @@ void run_query(size_t graph_size, std::vector<Edge> & edges, std::string query_f
+     planning_rulebook.build();
+     rapex_rb_graph.calculate_quotient_graph();
+ 
++    std::vector<size_t> multi_level_order;
++    if (algorithm == "MultiLevel") {
++        if (!planning_rulebook.isTotallyOrdered()) {
++            throw std::invalid_argument("MultiLevel requires a strict total rule priority order; use RBExact for a branching rulebook frontier");
++        }
++        for (const auto& rule_class : planning_rulebook)
++            multi_level_order.push_back(*rule_class.begin());
++    }
++
++    if (algorithm == "MultiLevel") {
++        size_t query_count = 0;
++        for (const auto& [source, target] : queries) {
++            ++query_count;
++            auto result = multi_level::solve(edges, graph_size, source, target,
++                                             multi_level_order, time_limit);
++            const std::string path = output_file + ".q" + std::to_string(query_count) + ".edges";
++            if (result.reachable) multi_level::write_subgraph(path, edges, result);
++            std::cout << "Query " << query_count << ": "
++                      << (result.timed_out ? "timed out" : result.reachable ? "optimal" : "unreachable")
++                      << ", edges=" << result.optimal_edges.size() << ", cost=[";
++            for (size_t i = 0; i < result.cost.size(); ++i)
++                std::cout << (i ? ", " : "") << result.cost[i];
++            std::cout << "]\n";
++            stats << "MultiLevel\t" << source << '\t' << target << '\t'
++                  << (result.reachable ? 1 : 0) << '\t' << result.seconds << '\t'
++                  << result.optimal_edges.size() << '\t'
++                  << (result.reachable ? path : "-") << '\n';
++        }
++        return;
++    }
++
+     // Build the graph for Rulebook Planning
+     RulebookCost::setRulebook(planning_rulebook);
+     WeightedGraph<RulebookCost> planning_graph;
+@@ -220,7 +252,7 @@ int main(int argc, char** argv){
+         ("rules,r", po::value<std::string>()->default_value(""), "rules file")
+         ("map,m",po::value< std::vector<std::string> >(&objective_files)->multitoken(), "files for edge weight")
+         ("merge", po::value<std::string>()->default_value(""), "strategy for merging apex node pair: SMALLER_G2, RANDOM or MORE_SLACK")
+-        ("algorithm,a", po::value<std::string>()->default_value("RApex"), "solvers (BOA, PPA, Apex, RBExact, RBApprox, RApex, or RApexNoDr)")
++        ("algorithm,a", po::value<std::string>()->default_value("RApex"), "solvers (BOA, PPA, Apex, RBExact, RBApprox, RApex, RApexNoDr, MultiLevel)")
+         ("cutoffTime,t", po::value<int>()->default_value(300), "cutoff time (seconds)")
+         ("output,o", po::value<std::string>()->required(), "Name of the output file")
+         ("logging_file", po::value<std::string>()->default_value(""), "logging file" )
+@@ -274,7 +306,8 @@ int main(int argc, char** argv){
+     MergeStrategy ms = DEFAULT_MERGE_STRATEGY;
+     alg_variant = vm["merge"].as<std::string>();
+ 
+-    if (vm["merge"].as<std::string>() != "" && vm["algorithm"].as<std::string>()!= "Apex"){
++    if (vm["merge"].as<std::string>() != "" && vm["algorithm"].as<std::string>() != "Apex" &&
++        vm["algorithm"].as<std::string>() != "RApex" && vm["algorithm"].as<std::string>() != "RApexNoDr"){
+         alg_variant = "";
+         std::cout << "WARNING: merge strategy with non-apex search" << std::endl;
+     }else if(vm["merge"].as<std::string>() == "SMALLER_G2"){
+@@ -287,7 +320,7 @@ int main(int argc, char** argv){
+         ms = MergeStrategy::MORE_SLACK;
+     }else if(vm["merge"].as<std::string>() == "REVERSE_LEX"){
+         ms = MergeStrategy::REVERSE_LEX;
+-    }else{
++    }else if(vm["merge"].as<std::string>() != ""){
+         std::cerr << "unknown merge strategy" << std::endl;
+     }
+ 

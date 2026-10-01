@@ -1,0 +1,4 @@
+algorithm,source,target,status,wall_seconds,vector_count,r1_edges,return_code
+MultiLevel,200128,37658,COMPLETE,11.445,1,525,0
+RBExact,200128,37658,CHECK_LOG,318.159,0,,0
+RApex,200128,37658,CHECK_LOG,19.840,1,,0

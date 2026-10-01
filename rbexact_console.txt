@@ -1,0 +1,9 @@
+resources\dataset\USA-road-d.BAY.gr
+resources\dataset\USA-road-t.BAY.gr
+resources\dataset\USA-road-3.BAY.gr
+Graph Size: 321270
+Started Query: 1/1
+Graph size: 321270
+Runtime: 301.665
+[]
+-----End Single Example-----

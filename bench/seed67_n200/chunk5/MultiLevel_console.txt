@@ -1,0 +1,30 @@
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-d.BAY.gr
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-t.BAY.gr
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-3.BAY.gr
+Graph Size: 321270
+Query 1: optimal, edges=460, cost=[864089, 0, 0]
+Query 2: optimal, edges=592, cost=[1717068, 0, 0]
+Query 3: optimal, edges=931, cost=[1626431, 0, 0]
+Query 4: optimal, edges=153, cost=[295298, 0, 0]
+Query 5: optimal, edges=388, cost=[802787, 0, 0]
+Query 6: optimal, edges=1123, cost=[2402575, 0, 0]
+Query 7: optimal, edges=445, cost=[940855, 0, 0]
+Query 8: optimal, edges=309, cost=[534238, 0, 0]
+Query 9: optimal, edges=249, cost=[406954, 0, 0]
+Query 10: optimal, edges=608, cost=[1007692, 0, 0]
+Query 11: optimal, edges=446, cost=[797613, 0, 0]
+Query 12: optimal, edges=497, cost=[1542533, 0, 0]
+Query 13: optimal, edges=365, cost=[843488, 0, 0]
+Query 14: optimal, edges=572, cost=[1426116, 0, 0]
+Query 15: optimal, edges=346, cost=[815599, 0, 0]
+Query 16: optimal, edges=65, cost=[67606, 0, 0]
+Query 17: optimal, edges=201, cost=[332605, 0, 0]
+Query 18: optimal, edges=274, cost=[493743, 0, 0]
+Query 19: optimal, edges=386, cost=[675422, 0, 0]
+Query 20: optimal, edges=552, cost=[1280213, 0, 0]
+Query 21: optimal, edges=335, cost=[887435, 0, 0]
+Query 22: optimal, edges=710, cost=[1074871, 0, 0]
+Query 23: optimal, edges=309, cost=[1085874, 0, 0]
+Query 24: optimal, edges=589, cost=[1221786, 0, 0]
+Query 25: optimal, edges=843, cost=[1908920, 0, 0]
+

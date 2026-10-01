@@ -1,0 +1,35 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles/multiobj.dir/src/driver.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/BiCriteria/AbstractSolver.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/BiCriteria/ApexSearch.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/BiCriteria/BOAStar.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/BiCriteria/DominanceChecker.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/BiCriteria/NAMOA.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/BiCriteria/PPA.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/BiCriteria/RApexSearch.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/BiCriteria/ShortestPathHeuristic.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/BiCriteria/SingleCriteria.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/Utils/Definitions.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/Utils/IOUtils.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/Utils/Logger.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/Utils/MapQueue.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/Utils/RulebookGraph.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/Utils/apex.cpp.obj: dyndep
+
+build CMakeFiles/multiobj.dir/src/Utils/realization_pair.cpp.obj: dyndep
+
