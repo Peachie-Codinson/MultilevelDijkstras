@@ -1,0 +1,12 @@
+C:\CPP_Projects\Rulebook_approximation\resources\random\grid500x500_violation_s1\r1.gr
+C:\CPP_Projects\Rulebook_approximation\resources\random\grid500x500_violation_s1\r2.gr
+C:\CPP_Projects\Rulebook_approximation\resources\random\grid500x500_violation_s1\r3.gr
+Graph Size: 250000
+MultiLevel graph build: 0.310118s
+Query 1: optimal, edges=412, cost=[0, 10876, 19601]
+Query 2: optimal, edges=187, cost=[0, 5407, 8895]
+Query 3: optimal, edges=605, cost=[0, 16103, 30377]
+Query 4: optimal, edges=537, cost=[0, 13863, 27158]
+Query 5: optimal, edges=213, cost=[0, 5884, 11032]
+Query 6: optimal, edges=748, cost=[0, 19257, 36643]
+

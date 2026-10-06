@@ -1,0 +1,7 @@
+graph=grid-violation seed=7 queries=24 rulebooks=['fork', 'chain'] -> C:\CPP_Projects\Rulebook_approximation\bench\grid-violation-t240_seed7_n24
+running 16 solver processes, 8 at a time
+all solvers finished in 1506s
+[fork] MultiLevel 2787.86s  RA*pex 5541.17s (incl. 87.89s heuristic)  speedup x1.99  RA*pex faster on 0/24  completed: MultiLevel 17, RA*pex 2, both 2  mismatches 0/2
+[chain] MultiLevel 30.29s  RA*pex 221.37s (incl. 83.46s heuristic)  speedup x7.31  RA*pex faster on 0/24  completed: MultiLevel 24, RA*pex 24, both 24  mismatches 0/24
+graph build, once per graph: MultiLevel 0.29s, RA*pex 1.66s
+Wrote C:\CPP_Projects\Rulebook_approximation\bench\grid-violation-t240_seed7_n24\runtime.png

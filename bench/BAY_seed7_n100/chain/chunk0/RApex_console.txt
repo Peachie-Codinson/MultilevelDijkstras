@@ -1,0 +1,270 @@
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-d.BAY.gr
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-t.BAY.gr
+C:\CPP_Projects\Rulebook_approximation\resources\dataset\USA-road-3.BAY.gr
+Graph Size: 321270
+RA*pex graph build: 1.74953s
+Started Query: 1/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.8382s)
+
+Node expansion: 48957
+Runtime: 2.159
+{"id": 79089, "parent": -1, "cost_until_now": [824304, 2036120, 1043932], "heuristic_cost": [0, 0, 0], "full_cost": [824304, 2036120, 1043932]}
+-----End Single Example-----
+Started Query: 2/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.73154s)
+
+Node expansion: 3091
+Runtime: 0.193
+{"id": 25316, "parent": -1, "cost_until_now": [590151, 708159, 474880], "heuristic_cost": [0, 0, 0], "full_cost": [590151, 708159, 474880]}
+-----End Single Example-----
+Started Query: 3/33
+Start Computing Heuristic
+Finish Computing Heuristic (4.04164s)
+
+Node expansion: 39763
+Runtime: 1.865
+{"id": 280957, "parent": -1, "cost_until_now": [699777, 1349156, 752971], "heuristic_cost": [0, 0, 0], "full_cost": [699777, 1349156, 752971]}
+-----End Single Example-----
+Started Query: 4/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.60137s)
+
+Node expansion: 33778
+Runtime: 1.832
+{"id": 191727, "parent": -1, "cost_until_now": [641075, 1038606, 618584], "heuristic_cost": [0, 0, 0], "full_cost": [641075, 1038606, 618584]}
+-----End Single Example-----
+Started Query: 5/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.83239s)
+
+Node expansion: 40597
+Runtime: 2.05
+{"id": 30409, "parent": -1, "cost_until_now": [1346607, 1983196, 1222413], "heuristic_cost": [0, 0, 0], "full_cost": [1346607, 1983196, 1222413]}
+-----End Single Example-----
+Started Query: 6/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.79852s)
+
+Node expansion: 263760
+Runtime: 12.37
+{"id": 112564, "parent": -1, "cost_until_now": [2378133, 4665341, 2578245], "heuristic_cost": [0, 0, 0], "full_cost": [2378133, 4665341, 2578245]}
+-----End Single Example-----
+Started Query: 7/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.81513s)
+
+Node expansion: 52522
+Runtime: 2.396
+{"id": 45062, "parent": -1, "cost_until_now": [544730, 1118230, 608566], "heuristic_cost": [0, 0, 0], "full_cost": [544730, 1118230, 608566]}
+-----End Single Example-----
+Started Query: 8/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.68541s)
+
+Node expansion: 1147
+Runtime: 0.119
+{"id": 219243, "parent": -1, "cost_until_now": [157667, 238019, 144580], "heuristic_cost": [0, 0, 0], "full_cost": [157667, 238019, 144580]}
+-----End Single Example-----
+Started Query: 9/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.71754s)
+
+Node expansion: 167794
+Runtime: 7.708
+{"id": 126177, "parent": -1, "cost_until_now": [1345390, 2674428, 1473689], "heuristic_cost": [0, 0, 0], "full_cost": [1345390, 2674428, 1473689]}
+-----End Single Example-----
+Started Query: 10/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.76216s)
+
+Node expansion: 30494
+Runtime: 1.402
+{"id": 288908, "parent": -1, "cost_until_now": [832061, 1354162, 800232], "heuristic_cost": [0, 0, 0], "full_cost": [832061, 1354162, 800232]}
+-----End Single Example-----
+Started Query: 11/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.79872s)
+
+Node expansion: 8557
+Runtime: 0.408
+{"id": 30991, "parent": -1, "cost_until_now": [339722, 636705, 355033], "heuristic_cost": [0, 0, 0], "full_cost": [339722, 636705, 355033]}
+-----End Single Example-----
+Started Query: 12/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.84232s)
+
+Node expansion: 65847
+Runtime: 3.008
+{"id": 64908, "parent": -1, "cost_until_now": [805339, 1650089, 895967], "heuristic_cost": [0, 0, 0], "full_cost": [805339, 1650089, 895967]}
+-----End Single Example-----
+Started Query: 13/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.69071s)
+
+Node expansion: 122561
+Runtime: 5.39
+{"id": 305659, "parent": -1, "cost_until_now": [2038617, 3849289, 2156675], "heuristic_cost": [0, 0, 0], "full_cost": [2038617, 3849289, 2156675]}
+-----End Single Example-----
+Started Query: 14/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.79757s)
+
+Node expansion: 145349
+Runtime: 6.607
+{"id": 302569, "parent": -1, "cost_until_now": [1259903, 2486852, 1386122], "heuristic_cost": [0, 0, 0], "full_cost": [1259903, 2486852, 1386122]}
+-----End Single Example-----
+Started Query: 15/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.69493s)
+
+Node expansion: 106820
+Runtime: 4.786
+{"id": 207975, "parent": -1, "cost_until_now": [1272532, 2583728, 1401282], "heuristic_cost": [0, 0, 0], "full_cost": [1272532, 2583728, 1401282]}
+-----End Single Example-----
+Started Query: 16/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.65233s)
+
+Node expansion: 170917
+Runtime: 7.998
+{"id": 115911, "parent": -1, "cost_until_now": [1839849, 3091754, 1811895], "heuristic_cost": [0, 0, 0], "full_cost": [1839849, 3091754, 1811895]}
+-----End Single Example-----
+Started Query: 17/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.76344s)
+
+Node expansion: 44080
+Runtime: 2.238
+{"id": 291853, "parent": -1, "cost_until_now": [1141609, 1757684, 1059825], "heuristic_cost": [0, 0, 0], "full_cost": [1141609, 1757684, 1059825]}
+-----End Single Example-----
+Started Query: 18/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.65703s)
+
+Node expansion: 95968
+Runtime: 4.164
+{"id": 151839, "parent": -1, "cost_until_now": [1089485, 2371426, 1265511], "heuristic_cost": [0, 0, 0], "full_cost": [1089485, 2371426, 1265511]}
+-----End Single Example-----
+Started Query: 19/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.83704s)
+
+Node expansion: 127566
+Runtime: 5.787
+{"id": 75632, "parent": -1, "cost_until_now": [840184, 1804776, 970052], "heuristic_cost": [0, 0, 0], "full_cost": [840184, 1804776, 970052]}
+-----End Single Example-----
+Started Query: 20/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.83047s)
+
+Node expansion: 69957
+Runtime: 3.136
+{"id": 61758, "parent": -1, "cost_until_now": [1336571, 2315438, 1342954], "heuristic_cost": [0, 0, 0], "full_cost": [1336571, 2315438, 1342954]}
+-----End Single Example-----
+Started Query: 21/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.72326s)
+
+Node expansion: 2880
+Runtime: 0.182
+{"id": 161734, "parent": -1, "cost_until_now": [773968, 1124067, 696173], "heuristic_cost": [0, 0, 0], "full_cost": [773968, 1124067, 696173]}
+-----End Single Example-----
+Started Query: 22/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.67751s)
+
+Node expansion: 9686
+Runtime: 0.433
+{"id": 94753, "parent": -1, "cost_until_now": [692608, 1139912, 672156], "heuristic_cost": [0, 0, 0], "full_cost": [692608, 1139912, 672156]}
+-----End Single Example-----
+Started Query: 23/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.67441s)
+
+Node expansion: 104962
+Runtime: 4.618
+{"id": 304926, "parent": -1, "cost_until_now": [1014376, 2202075, 1187295], "heuristic_cost": [0, 0, 0], "full_cost": [1014376, 2202075, 1187295]}
+-----End Single Example-----
+Started Query: 24/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.80372s)
+
+Node expansion: 641
+Runtime: 0.092
+{"id": 98499, "parent": -1, "cost_until_now": [342498, 635950, 358741], "heuristic_cost": [0, 0, 0], "full_cost": [342498, 635950, 358741]}
+-----End Single Example-----
+Started Query: 25/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.87012s)
+
+Node expansion: 9057
+Runtime: 0.525
+{"id": 51082, "parent": -1, "cost_until_now": [404081, 615300, 371021], "heuristic_cost": [0, 0, 0], "full_cost": [404081, 615300, 371021]}
+-----End Single Example-----
+Started Query: 26/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.93188s)
+
+Node expansion: 160052
+Runtime: 7.31
+{"id": 32920, "parent": -1, "cost_until_now": [1445229, 2921289, 1598918], "heuristic_cost": [0, 0, 0], "full_cost": [1445229, 2921289, 1598918]}
+-----End Single Example-----
+Started Query: 27/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.70479s)
+
+Node expansion: 115214
+Runtime: 5.394
+{"id": 31249, "parent": -1, "cost_until_now": [1092079, 2142416, 1179796], "heuristic_cost": [0, 0, 0], "full_cost": [1092079, 2142416, 1179796]}
+-----End Single Example-----
+Started Query: 28/33
+Start Computing Heuristic
+Finish Computing Heuristic (4.07671s)
+
+Node expansion: 255513
+Runtime: 12.145
+{"id": 260265, "parent": -1, "cost_until_now": [2064002, 3981126, 2212818], "heuristic_cost": [0, 0, 0], "full_cost": [2064002, 3981126, 2212818]}
+-----End Single Example-----
+Started Query: 29/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.68689s)
+
+Node expansion: 79328
+Runtime: 3.675
+{"id": 224182, "parent": -1, "cost_until_now": [1329869, 2023021, 1232938], "heuristic_cost": [0, 0, 0], "full_cost": [1329869, 2023021, 1232938]}
+-----End Single Example-----
+Started Query: 30/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.70284s)
+
+Node expansion: 29461
+Runtime: 1.495
+{"id": 244110, "parent": -1, "cost_until_now": [631693, 992350, 597150], "heuristic_cost": [0, 0, 0], "full_cost": [631693, 992350, 597150]}
+-----End Single Example-----
+Started Query: 31/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.57189s)
+
+Node expansion: 31252
+Runtime: 1.275
+{"id": 237600, "parent": -1, "cost_until_now": [943280, 1919204, 1037963], "heuristic_cost": [0, 0, 0], "full_cost": [943280, 1919204, 1037963]}
+-----End Single Example-----
+Started Query: 32/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.80763s)
+
+Node expansion: 17241
+Runtime: 0.754
+{"id": 157165, "parent": -1, "cost_until_now": [477902, 1146905, 595289], "heuristic_cost": [0, 0, 0], "full_cost": [477902, 1146905, 595289]}
+-----End Single Example-----
+Started Query: 33/33
+Start Computing Heuristic
+Finish Computing Heuristic (3.80717s)
+
+Node expansion: 43455
+Runtime: 1.919
+{"id": 94250, "parent": -1, "cost_until_now": [1521939, 2174735, 1362684], "heuristic_cost": [0, 0, 0], "full_cost": [1521939, 2174735, 1362684]}
+-----End Single Example-----
+

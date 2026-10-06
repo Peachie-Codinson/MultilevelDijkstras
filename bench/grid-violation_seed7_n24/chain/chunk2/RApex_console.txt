@@ -1,0 +1,54 @@
+C:\CPP_Projects\Rulebook_approximation\resources\random\grid500x500_violation_s1\r1.gr
+C:\CPP_Projects\Rulebook_approximation\resources\random\grid500x500_violation_s1\r2.gr
+C:\CPP_Projects\Rulebook_approximation\resources\random\grid500x500_violation_s1\r3.gr
+Graph Size: 250000
+RA*pex graph build: 1.81448s
+Started Query: 1/6
+Start Computing Heuristic
+Finish Computing Heuristic (3.67218s)
+
+Node expansion: 78077
+Runtime: 6.035
+{"id": 15496, "parent": -1, "cost_until_now": [0, 10876, 19601], "heuristic_cost": [0, 0, 0], "full_cost": [0, 10876, 19601]}
+-----End Single Example-----
+Started Query: 2/6
+Start Computing Heuristic
+Finish Computing Heuristic (3.84662s)
+
+Node expansion: 15155
+Runtime: 1.104
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5407, 8895], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5407, 8895]}
+-----End Single Example-----
+Started Query: 3/6
+Start Computing Heuristic
+Finish Computing Heuristic (3.60585s)
+
+Node expansion: 118512
+Runtime: 9.506
+{"id": 248369, "parent": -1, "cost_until_now": [0, 16103, 30377], "heuristic_cost": [0, 0, 0], "full_cost": [0, 16103, 30377]}
+-----End Single Example-----
+Started Query: 4/6
+Start Computing Heuristic
+Finish Computing Heuristic (3.8521s)
+
+Node expansion: 116523
+Runtime: 9.21
+{"id": 165315, "parent": -1, "cost_until_now": [0, 13863, 27158], "heuristic_cost": [0, 0, 0], "full_cost": [0, 13863, 27158]}
+-----End Single Example-----
+Started Query: 5/6
+Start Computing Heuristic
+Finish Computing Heuristic (3.8597s)
+
+Node expansion: 22749
+Runtime: 1.688
+{"id": 152830, "parent": -1, "cost_until_now": [0, 5884, 11032], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5884, 11032]}
+-----End Single Example-----
+Started Query: 6/6
+Start Computing Heuristic
+Finish Computing Heuristic (3.68195s)
+
+Node expansion: 169678
+Runtime: 14.238
+{"id": 16217, "parent": -1, "cost_until_now": [0, 19257, 36643], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19257, 36643]}
+-----End Single Example-----
+

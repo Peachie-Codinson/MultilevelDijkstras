@@ -1,0 +1,22 @@
+=== BAY (exit 0, 327s)
+all solvers finished in 323s
+[fork] MultiLevel 20.59s  RA*pex 718.45s (incl. 382.21s heuristic)  speedup x34.90  RA*pex faster on 0/100  completed: MultiLevel 100, RA*pex 100, both 100  mismatches 0/100
+[chain] MultiLevel 20.89s  RA*pex 699.55s (incl. 375.96s heuristic)  speedup x33.49  RA*pex faster on 0/100  completed: MultiLevel 100, RA*pex 100, both 100  mismatches 0/100
+graph build, once per graph: MultiLevel 0.28s, RA*pex 1.76s
+Wrote C:\CPP_Projects\Rulebook_approximation\bench\BAY_seed7_n100\runtime.png
+
+=== grid-distinct (exit 0, 461s)
+all solvers finished in 457s
+[fork] MultiLevel 26.40s  RA*pex 1100.74s (incl. 385.10s heuristic)  speedup x41.69  RA*pex faster on 0/100  completed: MultiLevel 100, RA*pex 100, both 100  mismatches 0/100
+[chain] MultiLevel 23.93s  RA*pex 1052.54s (incl. 374.70s heuristic)  speedup x43.98  RA*pex faster on 0/100  completed: MultiLevel 100, RA*pex 100, both 100  mismatches 0/100
+graph build, once per graph: MultiLevel 0.31s, RA*pex 1.78s
+Wrote C:\CPP_Projects\Rulebook_approximation\bench\grid-distinct_seed7_n100\runtime.png
+
+=== grid-violation (exit 0, 791s)
+all solvers finished in 787s
+[fork] MultiLevel 1752.50s  RA*pex 2908.35s (incl. 93.41s heuristic)  speedup x1.66  RA*pex faster on 0/24  completed: MultiLevel 13, RA*pex 2, both 2  mismatches 0/2
+[chain] MultiLevel 29.95s  RA*pex 234.24s (incl. 88.74s heuristic)  speedup x7.82  RA*pex faster on 0/24  completed: MultiLevel 24, RA*pex 24, both 24  mismatches 0/24
+graph build, once per graph: MultiLevel 0.31s, RA*pex 1.81s
+Wrote C:\CPP_Projects\Rulebook_approximation\bench\grid-violation_seed7_n24\runtime.png
+
+ALL DONE

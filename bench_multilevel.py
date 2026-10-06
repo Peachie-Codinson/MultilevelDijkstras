@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Benchmark MultiLevel (iterated Dijkstra) against RA*pex on random queries.
 
-Generates N random source,target pairs, runs both solvers over the same query
-file (one process each, so the graph is loaded once), then compares per-query
-runtime and the set of returned cost vectors.
+Generates N random source,target pairs and solves each one with both
+algorithms under both rulebooks: fork (r1 > {r2, r3}) and chain (r1 > r2 > r3).
+Per-query runtimes are complete: RA*pex = heuristic setup + search, MultiLevel =
+its whole solve. Each solver's one-time graph build is recorded separately.
+Writes summary_fork.csv, summary_chain.csv and runtime.png to the output folder.
 
-py -3 bench_multilevel.py -n 20 --seed 7 -j 4
+py -3 bench_multilevel.py --graph BAY -n 100 --seed 7 -j 6
 """
 import argparse
 import csv
@@ -18,6 +20,14 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+DATA = Path('resources/dataset')
+GRAPHS = {
+    'BAY': [DATA / f'USA-road-{x}.BAY.gr' for x in 'dt3'],
+    'grid-distinct': [Path(f'resources/random/grid500x500_distinct_s1/r{k}.gr') for k in (1, 2, 3)],
+    'grid-violation': [Path(f'resources/random/grid500x500_violation_s1/r{k}.gr') for k in (1, 2, 3)],
+}
+RULEBOOKS = {'fork': DATA / 'fork_rules.txt', 'chain': DATA / 'chain_rules.txt'}
+
 
 def graph_size(gr):
     with gr.open() as f:
@@ -27,12 +37,20 @@ def graph_size(gr):
     raise ValueError(f'no problem line in {gr}')
 
 
+def make_queries(n_vertices, n, seed):
+    rng, pairs = random.Random(seed), []
+    while len(pairs) < n:
+        s, t = rng.randint(1, n_vertices), rng.randint(1, n_vertices)
+        if s != t:
+            pairs.append((s, t))
+    return pairs
+
+
 def run(exe, maps, queries, rules, algo, cutoff, out_dir, dll_dir, extra=()):
     out_dir.mkdir(parents=True, exist_ok=True)
     stats = out_dir / f'{algo}_stats.txt'
     cmd = [str(exe), *extra, '-m', *map(str, maps), '-q', str(queries), '-r', str(rules),
            '-a', algo, '-t', str(cutoff), '-o', str(stats)]
-    print(f'> {algo} on {queries.name}', flush=True)
     start = time.perf_counter()
     env = dict(os.environ)
     if dll_dir:  # make sure the exe picks up the runtime DLLs it was built with
@@ -41,23 +59,26 @@ def run(exe, maps, queries, rules, algo, cutoff, out_dir, dll_dir, extra=()):
     wall = time.perf_counter() - start
     (out_dir / f'{algo}_console.txt').write_text(proc.stdout + '\n' + proc.stderr, encoding='utf-8')
     if proc.returncode != 0:
-        raise RuntimeError(f'{algo} exited with {proc.returncode}; see {algo}_console.txt')
+        raise RuntimeError(f'{algo} exited with {proc.returncode}; see {out_dir / (algo + "_console.txt")}')
     rows = [l.split('\t') for l in stats.read_text().splitlines() if l.strip()]
     return rows, proc.stdout, wall
 
 
 def multilevel_results(rows):
     # MultiLevel  src  dst  #sol  seconds  #edges  edges_path  solutions_path  status
+    #             pass_edges "total>p1>p2.."  pass_vertices  labels "created/rejected"
     res = []
     for r in rows:
         sols = Path(r[7])
         vecs = {tuple(map(int, l.split())) for l in sols.read_text().splitlines() if l.strip()} if sols.exists() else set()
-        res.append(dict(seconds=float(r[4]), status=r[8].strip(), vectors=vecs, edges=int(r[5])))
+        extra = [x.strip() for x in r[9:12]] + [''] * (12 - max(len(r), 9))
+        res.append(dict(seconds=float(r[4]), status=r[8].strip(), vectors=vecs, edges=int(r[5]),
+                        pass_edges=extra[0], pass_vertices=extra[1], labels=extra[2]))
     return res
 
 
 def rapex_results(rows, console, targets, cutoff):
-    # RApex-variant  src  dst  num_gen  num_exp  #sol  seconds
+    # RApex-variant  src  dst  num_gen  num_exp  #sol  search_seconds  heuristic_seconds
     blocks = re.split(r'^Started Query: \d+/\d+\s*$', console, flags=re.M)[1:]
     res = []
     for r, block, target in zip(rows, blocks, targets):
@@ -72,101 +93,123 @@ def rapex_results(rows, console, targets, cutoff):
                 continue
             if obj.get('id') == target and isinstance(obj.get('full_cost'), list):
                 vecs.add(tuple(obj['full_cost']))
-        secs = float(r[6])
-        res.append(dict(seconds=secs, status='TIMEOUT' if secs >= cutoff else 'COMPLETE', vectors=vecs,
+        search, heuristic = float(r[6]), float(r[7])
+        res.append(dict(search=search, heuristic=heuristic, seconds=search + heuristic,
+                        status='TIMEOUT' if search >= cutoff else 'COMPLETE', vectors=vecs,
                         generated=int(r[3]), expanded=int(r[4])))
     return res
 
 
+def setup_seconds(console, label):
+    m = re.search(rf'^{re.escape(label)} graph build: ([\d.eE+-]+)s', console, re.M)
+    return float(m.group(1)) if m else float('nan')
+
+
+FIELDS = ['query', 'source', 'target',
+          'ml_status', 'ml_seconds', 'ml_vectors',
+          'rapex_status', 'rapex_seconds', 'rapex_search_seconds', 'rapex_heuristic_seconds', 'rapex_vectors',
+          'match', 'missing_in_rapex', 'extra_in_rapex',
+          'rapex_generated', 'rapex_expanded', 'ml_pass_edges', 'ml_pass_vertices', 'ml_labels']
+
+
 def main():
-    d = Path('resources/dataset')
-    p = argparse.ArgumentParser(description=__doc__)
+    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    p.add_argument('--graph', choices=list(GRAPHS), default='BAY', help='graph preset (or give --maps)')
+    p.add_argument('--maps', nargs=3, type=Path, help='three .gr files (r1 r2 r3); overrides --graph')
     p.add_argument('-n', '--num-queries', type=int, default=10)
     p.add_argument('--seed', type=int, default=None, help='random seed (default: random)')
-    p.add_argument('--exe', type=Path, default=Path('build/multiobj.exe'))
-    p.add_argument('--maps', nargs=3, type=Path, default=[d / f'USA-road-{x}.BAY.gr' for x in 'dt3'])
-    p.add_argument('--rules', type=Path, default=d / 'fork_rules.txt')
-    p.add_argument('--cutoff', type=int, default=300)
+    p.add_argument('--rulebooks', nargs='+', choices=list(RULEBOOKS), default=list(RULEBOOKS))
+    p.add_argument('--cutoff', type=int, default=300, help='per-query search limit in seconds')
+    p.add_argument('-j', '--jobs', type=int, default=1, help='solver processes to run at once')
+    p.add_argument('--tag', help='output folder prefix (default: graph name)')
     p.add_argument('--out', type=Path, default=Path('bench'))
-    p.add_argument('-j', '--jobs', type=int, default=1,
-                   help='solver processes to run at once; queries are split into this many chunks per algorithm')
+    p.add_argument('--exe', type=Path, default=Path('build/multiobj.exe'))
     p.add_argument('--dll-dir', type=Path, default=Path('C:/msys64/ucrt64/bin'),
                    help='toolchain bin dir prepended to PATH (empty string to disable)')
+    p.add_argument('--keep-edges', action='store_true', help='keep the per-query optimal-subgraph .edges files')
+    p.add_argument('--no-plot', action='store_true')
     a = p.parse_args()
 
+    maps = [m.resolve() for m in (a.maps or GRAPHS[a.graph])]
+    graph = 'custom' if a.maps else a.graph
     seed = a.seed if a.seed is not None else random.randrange(1 << 30)
-    rng = random.Random(seed)
-    n_vertices = graph_size(a.maps[0])
-    pairs = []
-    while len(pairs) < a.num_queries:
-        s, t = rng.randint(1, n_vertices), rng.randint(1, n_vertices)
-        if s != t:
-            pairs.append((s, t))
-
-    out = (a.out / f'seed{seed}_n{a.num_queries}').resolve()
+    pairs = make_queries(graph_size(maps[0]), a.num_queries, seed)
+    out = (a.out / f'{a.tag or graph}_seed{seed}_n{len(pairs)}').resolve()
     out.mkdir(parents=True, exist_ok=True)
-    qfile = out / 'queries.txt'
-    qfile.write_text(''.join(f'{s},{t}\n' for s, t in pairs))
-    print(f'seed={seed}  queries={len(pairs)}  rules={a.rules}  -> {out}')
+    (out / 'queries.txt').write_text(''.join(f'{s},{t}\n' for s, t in pairs))
+    print(f'graph={graph} seed={seed} queries={len(pairs)} rulebooks={a.rulebooks} -> {out}', flush=True)
 
-    exe, maps, rules = a.exe.resolve(), [m.resolve() for m in a.maps], a.rules.resolve()
-    # Split queries into contiguous chunks; every (algorithm, chunk) is one solver process.
-    k = max(1, min(a.jobs, len(pairs)))
+    # One process per (rulebook, algorithm, chunk of queries).
+    k = max(1, min(max(1, a.jobs // 2), len(pairs)))
     bounds = [(i * len(pairs) // k, (i + 1) * len(pairs) // k) for i in range(k)]
     jobs = []
-    for c, (lo, hi) in enumerate(bounds):
-        cdir = out / f'chunk{c}' if k > 1 else out
-        cdir.mkdir(parents=True, exist_ok=True)
-        cq = cdir / 'queries.txt'
-        cq.write_text(''.join(f'{s},{t}\n' for s, t in pairs[lo:hi]))
-        jobs.append(('MultiLevel', c, cq, cdir, ()))
-        jobs.append(('RApex', c, cq, cdir, ('--merge', 'RANDOM')))
-    if a.jobs > 1:
-        print(f'running {len(jobs)} solver processes, {a.jobs} at a time '
-              f'(timings are noisier when processes share the CPU)')
-    bench_start = time.perf_counter()
+    for rb in a.rulebooks:
+        for c, (lo, hi) in enumerate(bounds):
+            cdir = out / rb / f'chunk{c}'
+            cdir.mkdir(parents=True, exist_ok=True)
+            q = cdir / 'queries.txt'
+            q.write_text(''.join(f'{s},{t}\n' for s, t in pairs[lo:hi]))
+            jobs.append((rb, 'MultiLevel', c, q, cdir, ()))
+            jobs.append((rb, 'RApex', c, q, cdir, ('--merge', 'RANDOM')))
+    print(f'running {len(jobs)} solver processes, {a.jobs} at a time', flush=True)
+    start = time.perf_counter()
     with ThreadPoolExecutor(max_workers=max(1, a.jobs)) as pool:
-        futures = {(algo, c): pool.submit(run, exe, maps, cq, rules, algo, a.cutoff, cdir, a.dll_dir, list(extra))
-                   for algo, c, cq, cdir, extra in jobs}
+        futures = {(rb, algo, c): pool.submit(run, a.exe.resolve(), maps, q, RULEBOOKS[rb].resolve(), algo,
+                                              a.cutoff, cdir, a.dll_dir, list(extra))
+                   for rb, algo, c, q, cdir, extra in jobs}
         done = {key: f.result() for key, f in futures.items()}
-    bench_wall = time.perf_counter() - bench_start
-    ml, ra = [], []
-    for c, (lo, hi) in enumerate(bounds):
-        ml += multilevel_results(done['MultiLevel', c][0])
-        ra += rapex_results(done['RApex', c][0], done['RApex', c][1], [t for _, t in pairs[lo:hi]], a.cutoff)
-    ml_wall = sum(w for (algo, _), (_, _, w) in done.items() if algo == 'MultiLevel')
-    ra_wall = sum(w for (algo, _), (_, _, w) in done.items() if algo == 'RApex')
-    if len(ml) != len(pairs) or len(ra) != len(pairs):
-        raise RuntimeError(f'expected {len(pairs)} results, got MultiLevel={len(ml)} RApex={len(ra)}')
+    print(f'all solvers finished in {time.perf_counter() - start:.0f}s', flush=True)
 
-    fields = ['query', 'source', 'target', 'ml_status', 'ml_seconds', 'ml_vectors',
-              'rapex_status', 'rapex_seconds', 'rapex_vectors', 'ml_kept_edges', 'rapex_generated',
-              'rapex_expanded', 'match', 'missing_in_rapex', 'extra_in_rapex']
-    mism = 0
-    with (out / 'summary.csv').open('w', newline='') as f:
-        w = csv.DictWriter(f, fieldnames=fields)
-        w.writeheader()
-        for i, ((s, t), m, r) in enumerate(zip(pairs, ml, ra), 1):
-            match = m['vectors'] == r['vectors']
-            both_complete = m['status'] == 'COMPLETE' and r['status'] == 'COMPLETE'
-            mism += both_complete and not match
-            w.writerow(dict(query=i, source=s, target=t,
-                            ml_status=m['status'], ml_seconds=f"{m['seconds']:.4f}", ml_vectors=len(m['vectors']),
-                            rapex_status=r['status'], rapex_seconds=f"{r['seconds']:.4f}", rapex_vectors=len(r['vectors']),
-                            ml_kept_edges=m['edges'], rapex_generated=r['generated'], rapex_expanded=r['expanded'],
-                            match=match, missing_in_rapex=sorted(m['vectors'] - r['vectors']),
-                            extra_in_rapex=sorted(r['vectors'] - m['vectors'])))
-            print(f"q{i:<3} {s:>7}->{t:<7} ML {m['seconds']:8.3f}s {len(m['vectors']):3}v  "
-                  f"RApex {r['seconds']:8.3f}s {len(r['vectors']):3}v  {'OK' if match else 'DIFF'}"
-                  f"{'' if both_complete else ' (incomplete)'}")
+    setup = {'MultiLevel': [], 'RA*pex': []}
+    for (rb, algo, c), (_, console, _) in done.items():
+        if algo == 'MultiLevel':
+            setup['MultiLevel'].append(setup_seconds(console, 'MultiLevel'))
+        else:
+            setup['RA*pex'].append(setup_seconds(console, 'RA*pex'))
+    setup = {k_: sum(v) / len(v) for k_, v in setup.items() if v}
+    meta = dict(graph=graph, seed=seed, queries=len(pairs), cutoff=a.cutoff, jobs=a.jobs,
+                graph_build_seconds=setup, maps=[str(m) for m in maps])
+    (out / 'meta.json').write_text(json.dumps(meta, indent=2))
 
-    ml_t = sum(m['seconds'] for m in ml)
-    ra_t = sum(r['seconds'] for r in ra)
-    print(f'\nTotal solver time: MultiLevel {ml_t:.3f}s  RApex {ra_t:.3f}s  (speedup x{ra_t / ml_t if ml_t else float("inf"):.2f})')
-    print(f'Process wall time: MultiLevel {ml_wall:.1f}s  RApex {ra_wall:.1f}s (summed over processes, includes graph loading)')
-    print(f'Bench elapsed: {bench_wall:.1f}s with -j {a.jobs}')
-    print(f'Set mismatches on completed queries: {mism}/{len(pairs)}')
-    print(f'Details: {out / "summary.csv"}')
+    for rb in a.rulebooks:
+        ml, ra = [], []
+        for c, (lo, hi) in enumerate(bounds):
+            ml += multilevel_results(done[rb, 'MultiLevel', c][0])
+            ra += rapex_results(done[rb, 'RApex', c][0], done[rb, 'RApex', c][1], [t for _, t in pairs[lo:hi]], a.cutoff)
+        if len(ml) != len(pairs) or len(ra) != len(pairs):
+            raise RuntimeError(f'{rb}: expected {len(pairs)} results, got MultiLevel={len(ml)} RApex={len(ra)}')
+        mism = complete = 0
+        with (out / f'summary_{rb}.csv').open('w', newline='') as f:
+            w = csv.DictWriter(f, fieldnames=FIELDS)
+            w.writeheader()
+            for i, ((s, t), m, r) in enumerate(zip(pairs, ml, ra), 1):
+                both = m['status'] == r['status'] == 'COMPLETE'
+                match = m['vectors'] == r['vectors']
+                complete += both
+                mism += both and not match
+                w.writerow(dict(query=i, source=s, target=t,
+                                ml_status=m['status'], ml_seconds=f"{m['seconds']:.4f}", ml_vectors=len(m['vectors']),
+                                rapex_status=r['status'], rapex_seconds=f"{r['seconds']:.4f}",
+                                rapex_search_seconds=f"{r['search']:.4f}", rapex_heuristic_seconds=f"{r['heuristic']:.4f}",
+                                rapex_vectors=len(r['vectors']), match=match,
+                                missing_in_rapex=sorted(m['vectors'] - r['vectors']),
+                                extra_in_rapex=sorted(r['vectors'] - m['vectors']),
+                                rapex_generated=r['generated'], rapex_expanded=r['expanded'],
+                                ml_pass_edges=m['pass_edges'], ml_pass_vertices=m['pass_vertices'], ml_labels=m['labels']))
+        ml_t, ra_t = sum(m['seconds'] for m in ml), sum(r['seconds'] for r in ra)
+        print(f"[{rb}] MultiLevel {ml_t:.2f}s  RA*pex {ra_t:.2f}s (incl. {sum(r['heuristic'] for r in ra):.2f}s heuristic)  "
+              f"speedup x{ra_t / ml_t if ml_t else float('inf'):.2f}  RA*pex faster on "
+              f"{sum(r['seconds'] < m['seconds'] for m, r in zip(ml, ra))}/{len(pairs)}  "
+              f"completed: MultiLevel {sum(m['status'] == 'COMPLETE' for m in ml)}, RA*pex "
+              f"{sum(r['status'] == 'COMPLETE' for r in ra)}, both {complete}  mismatches {mism}/{complete}", flush=True)
+    print('graph build, once per graph: ' + ', '.join(f'{k_} {v:.2f}s' for k_, v in setup.items()))
+
+    if not a.keep_edges:
+        for e in out.rglob('*.edges'):
+            e.unlink()
+    if not a.no_plot:
+        from plot_bench import plot
+        plot(out)
 
 
 if __name__ == '__main__':
