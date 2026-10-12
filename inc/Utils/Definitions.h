@@ -207,6 +207,10 @@ struct RealizationPair {
     Heuristic& h;
     RulebookGraph& rulebook_graph;
 
+    // Link each realization to its parent so solution paths can be read back.
+    // Off by default: the search itself only needs costs.
+    static bool keep_paths;
+
     RealizationPair(const NodePtr &rule_apex, const NodePtr &realization, Heuristic& h, RulebookGraph& rulebook_graph)
         : rule_apex(rule_apex), realization(realization), parent(realization->parent), h(h), id(rule_apex->id), rulebook_graph(rulebook_graph){};
 

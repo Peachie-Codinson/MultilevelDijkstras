@@ -35,6 +35,19 @@ const std::string output_path = "output/";
 const MergeStrategy DEFAULT_MERGE_STRATEGY = MergeStrategy::RANDOM;
 std::string alg_variant = "";
 
+// --trace: write each query's search order as JSON (for visualisation) with this path prefix.
+std::string trace_prefix = "";
+
+static void write_json_array(std::ostream& out, const std::vector<size_t>& values) {
+    out << '[';
+    for (size_t i = 0; i < values.size(); ++i) out << (i ? "," : "") << values[i];
+    out << ']';
+}
+
+static std::string trace_path(const std::string& algorithm, size_t source, size_t target) {
+    return trace_prefix + "." + algorithm + "." + std::to_string(source) + "-" + std::to_string(target) + ".json";
+}
+
 
 // Simple example to demonstarte the usage of the algorithm
 
@@ -82,9 +95,32 @@ SolutionSet single_run_map(size_t graph_size, AdjacencyMatrix& graph, AdjacencyM
         std::cerr << "unknown solver name" << std::endl;
         exit(-1);
     }
+    std::vector<size_t> trace;
+    const bool tracing = !trace_prefix.empty() && (algorithm == "RApex" || algorithm == "RApexNoDr");
+    if (tracing) ((RApexSearch*)solver.get())->set_trace(&trace);
+
     auto start =std::clock();
     (*solver)(source, target, heuristic, solutions, time_limit);
     runtime = std::clock() - start;
+
+    if (tracing) {
+        std::ofstream out(trace_path(algorithm, source, target));
+        out << "{\"algorithm\": \"" << algorithm << "\", \"source\": " << source << ", \"target\": " << target
+            << ", \"expanded\": ";
+        write_json_array(out, trace);
+        out << ", \"solutions\": [";
+        for (size_t i = 0; i < solutions.size(); ++i) {
+            std::vector<size_t> path;
+            for (NodePtr n = solutions[i]; n; n = n->parent) path.push_back(n->id);
+            std::reverse(path.begin(), path.end());
+            out << (i ? ", " : "") << "{\"cost\": ";
+            write_json_array(out, solutions[i]->g);
+            out << ", \"path\": ";
+            write_json_array(out, path);
+            out << "}";
+        }
+        out << "]}" << std::endl;
+    }
 
     std::cout << "Node expansion: " << solver->get_num_expansion() << std::endl;
     std::cout << "Runtime: " <<  ((double) runtime) / CLOCKS_PER_SEC<< std::endl;
@@ -194,12 +230,42 @@ void run_query(size_t graph_size, std::vector<Edge> & edges, std::string query_f
         std::cout << "MultiLevel graph build: "
                   << std::chrono::duration<double>(std::chrono::steady_clock::now() - build_start).count()
                   << "s" << std::endl;
+        multi_level::Trace trace;
+        if (!trace_prefix.empty()) multi_level_solver.set_trace(&trace);
         size_t query_count = 0;
         for (const auto& [source, target] : queries) {
             ++query_count;
             auto result = multi_level_fork
                 ? multi_level_solver.solve_fork(source, target, time_limit)
                 : multi_level_solver.solve(source, target, multi_level_order, time_limit);
+            if (!trace_prefix.empty()) {
+                std::ofstream out(trace_path(algorithm, source, target));
+                auto lists = [&](const char* name, const std::vector<std::vector<size_t>>& v) {
+                    out << ", \"" << name << "\": [";
+                    for (size_t i = 0; i < v.size(); ++i) { out << (i ? ", " : ""); write_json_array(out, v[i]); }
+                    out << "]";
+                };
+                out << "{\"algorithm\": \"MultiLevel\", \"source\": " << source << ", \"target\": " << target;
+                lists("forward", trace.forward);
+                lists("backward", trace.backward);
+                std::vector<std::vector<size_t>> kept_ends; // each pass: flat [u0, v0, u1, v1, ...]
+                for (const auto& pass : trace.kept) {
+                    kept_ends.emplace_back();
+                    for (size_t e : pass) { kept_ends.back().push_back(edges[e].source); kept_ends.back().push_back(edges[e].target); }
+                }
+                lists("kept", kept_ends);
+                out << ", \"pareto\": ";
+                write_json_array(out, trace.pareto);
+                out << ", \"solutions\": [";
+                for (size_t i = 0; i < trace.paths.size(); ++i) {
+                    out << (i ? ", " : "") << "{\"cost\": ";
+                    write_json_array(out, trace.path_costs[i]);
+                    out << ", \"path\": ";
+                    write_json_array(out, trace.paths[i]);
+                    out << "}";
+                }
+                out << "]}" << std::endl;
+            }
             const std::string path = output_file + ".q" + std::to_string(query_count) + ".edges";
             if (result.reachable) multi_level::write_subgraph(path, edges, result);
             const std::string solutions_path = output_file + ".q" + std::to_string(query_count) + ".solutions.txt";
@@ -291,6 +357,7 @@ int main(int argc, char** argv){
         ("cutoffTime,t", po::value<int>()->default_value(300), "cutoff time (seconds)")
         ("output,o", po::value<std::string>()->required(), "Name of the output file")
         ("logging_file", po::value<std::string>()->default_value(""), "logging file" )
+        ("trace", po::value<std::string>()->default_value(""), "write each query's search order as <prefix>.<algorithm>.<source>-<target>.json (MultiLevel, RApex)")
         // ("start,s", po::value<int>()->default_value(-1), "start location")
         // ("goal,g", po::value<int>()->default_value(-1), "goal location")
         // ("eps,e", po::value<double>()->default_value(0), "approximation factor")
@@ -316,6 +383,9 @@ int main(int argc, char** argv){
     // }
 
     LoggerPtr logger = nullptr;
+
+    trace_prefix = vm["trace"].as<std::string>();
+    RealizationPair::keep_paths = !trace_prefix.empty(); // RA*pex solution paths are only needed for traces
 
     if (vm["logging_file"].as<std::string>() != ""){
         logger = new Logger(vm["logging_file"].as<std::string>());

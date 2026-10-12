@@ -44,7 +44,10 @@ struct Result {
 struct Csr {
     size_t n = 0;
     std::vector<size_t> src, dst, gid;
+    std::vector<size_t> vid; // local vertex -> input vertex id; empty means identity
     std::vector<size_t> out_start, out_edge, in_start, in_edge;
+
+    size_t global(size_t v) const { return vid.empty() ? v : vid[v]; }
 
     void build(size_t vertices) {
         n = vertices;
@@ -99,9 +102,22 @@ struct Marks {
     void set(size_t v, size_t x) { stamp[v] = epoch; value[v] = x; }
 };
 
+// Optional record of the search order, for visualisation. All ids are input ids.
+struct Trace {
+    std::vector<std::vector<size_t>> forward, backward; // per pass: vertices in the order they were settled
+    std::vector<std::vector<size_t>> kept;              // per pass: kept edges in the order they were found
+    std::vector<size_t> pareto;                         // BOA* expansions, one vertex per expanded label
+    std::vector<std::vector<size_t>> paths;             // vertex sequence of each solution found
+    std::vector<std::vector<size_t>> path_costs;        // cost vector of each of those paths
+    void clear() { forward.clear(); backward.clear(); kept.clear(); pareto.clear(); paths.clear(); path_costs.clear(); }
+};
+
 class Solver {
 public:
     explicit Solver(const Graph& graph) : g_(graph) {}
+
+    // Record the search order of the following queries into `trace` (nullptr to stop).
+    void set_trace(Trace* trace) { trace_ = trace; }
 
     Result solve(size_t source, size_t target, const std::vector<size_t>& priority_order,
                  double timeout_seconds) {
@@ -140,7 +156,9 @@ public:
         using Item = std::tuple<size_t, size_t, size_t>; // f1, f2, label id
         std::priority_queue<Item, std::vector<Item>, std::greater<Item>> queue;
         std::vector<size_t> best_b(sub.n, INF); // smallest r2 cost expanded per vertex
+        std::vector<size_t> parent; // label -> parent label, kept only while tracing
         labels.push_back({s, 0, 0});
+        if (trace_) parent.push_back(INF);
         queue.push({h1[s], h2[s], 0});
         size_t pops = 0;
         while (!queue.empty()) {
@@ -153,8 +171,15 @@ public:
                 continue;
             }
             best_b[cur.vertex] = cur.b;
+            if (trace_) trace_->pareto.push_back(sub.global(cur.vertex));
             if (cur.vertex == t) {
                 result.solutions.push_back({result.cost[0], cur.a, cur.b});
+                if (trace_) {
+                    std::vector<size_t> path;
+                    for (size_t x = id; x != INF; x = parent[x]) path.push_back(sub.global(labels[x].vertex));
+                    trace_->paths.emplace_back(path.rbegin(), path.rend());
+                    trace_->path_costs.push_back({result.cost[0], cur.a, cur.b});
+                }
                 continue;
             }
             for (size_t k = sub.out_start[cur.vertex]; k < sub.out_start[cur.vertex + 1]; ++k) {
@@ -165,6 +190,7 @@ public:
                 const size_t a = cur.a + w1[ge], b = cur.b + w2[ge];
                 if (b >= best_b[v] || b + h2[v] >= best_b[t]) { ++result.labels_rejected; continue; }
                 labels.push_back({v, a, b});
+                if (trace_) parent.push_back(id);
                 queue.push({a + h1[v], b + h2[v], labels.size() - 1});
             }
         }
@@ -179,6 +205,7 @@ private:
     using Clock = std::chrono::steady_clock;
     const Graph& g_;
     Marks come_, go_, done_, remap_;
+    Trace* trace_ = nullptr;
 
     static double elapsed(Clock::time_point begin) {
         return std::chrono::duration<double>(Clock::now() - begin).count();
@@ -196,6 +223,7 @@ private:
         Result result;
         result.cost.assign(g_.objectives, 0);
         result.reachable = true;
+        if (trace_) trace_->clear();
         const Csr* cur = &g_.csr;
         for (size_t rule : order) {
             if (rule >= g_.objectives) throw std::invalid_argument("rule id outside the objective vector");
@@ -226,6 +254,7 @@ private:
         come_.reset(); go_.reset(); done_.reset();
         using Item = std::pair<size_t, size_t>;
         std::priority_queue<Item, std::vector<Item>, std::greater<Item>> queue;
+        if (trace_) { trace_->forward.emplace_back(); trace_->backward.emplace_back(); trace_->kept.emplace_back(); }
 
         // Forward Dijkstra, stopped once popped distances exceed c. Afterwards
         // come_ holds exact values for every vertex with come <= c; anything
@@ -238,6 +267,7 @@ private:
             queue.pop();
             if (d != come_.get(v)) continue;
             if (d > c) break;
+            if (trace_) trace_->forward.back().push_back(g.global(v));
             if (v == t) c = d;
             for (size_t k = g.out_start[v]; k < g.out_start[v + 1]; ++k) {
                 const size_t e = g.out_edge[k], u = g.dst[e], cost = w[g.gid[e]];
@@ -260,12 +290,16 @@ private:
             const size_t gv = go_.get(v);
             if (done_.get(v) != INF || gv + come_.get(v) != f) continue;
             done_.set(v, 1);
+            if (trace_) trace_->backward.back().push_back(g.global(v));
             for (size_t k = g.in_start[v]; k < g.in_start[v + 1]; ++k) {
                 const size_t e = g.in_edge[k], u = g.src[e], cost = w[g.gid[e]];
                 const size_t cu = come_.get(u);
                 if (cu > c || cost > c - cu || gv > c - cu - cost) continue;
                 const size_t ng = gv + cost;
-                if (cu + ng == c) kept.push_back(e);
+                if (cu + ng == c) {
+                    kept.push_back(e);
+                    if (trace_) trace_->kept.back().push_back(g.gid[e]);
+                }
                 if (ng < go_.get(u)) { go_.set(u, ng); queue.push({ng + cu, u}); }
             }
         }
@@ -281,7 +315,7 @@ private:
         size_t next = 0;
         auto id = [&](size_t v) {
             size_t x = remap_.get(v);
-            if (x == INF) { x = next++; remap_.set(v, x); }
+            if (x == INF) { x = next++; remap_.set(v, x); out.vid.push_back(g.global(v)); }
             return x;
         };
         out.src.reserve(kept.size());

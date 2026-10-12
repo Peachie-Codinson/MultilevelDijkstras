@@ -1,0 +1,1 @@
+MultiLevel	113678	109622	91	1.11514	898476	bench/animation/MultiLevel_stats.txt.q1.edges	bench/animation/MultiLevel_stats.txt.q1.solutions.txt	COMPLETE	998000>898476	250000>249983	35029/65998

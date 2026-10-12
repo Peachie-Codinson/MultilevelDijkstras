@@ -1,0 +1,229 @@
+C:\CPP_Projects\Rulebook_approximation\resources\random\grid500x500_violation_s1\r1.gr
+C:\CPP_Projects\Rulebook_approximation\resources\random\grid500x500_violation_s1\r2.gr
+C:\CPP_Projects\Rulebook_approximation\resources\random\grid500x500_violation_s1\r3.gr
+Graph Size: 250000
+RA*pex graph build: 1.61384s
+Started Query: 1/3
+Start Computing Heuristic
+Finish Computing Heuristic (4.1324s)
+
+Node expansion: 1357507
+Runtime: 601.97
+{"id": 15496, "parent": -1, "cost_until_now": [0, 21079, 10940], "heuristic_cost": [0, 0, 0], "full_cost": [0, 21079, 10940]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 20636, 10951], "heuristic_cost": [0, 0, 0], "full_cost": [0, 20636, 10951]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 20519, 10962], "heuristic_cost": [0, 0, 0], "full_cost": [0, 20519, 10962]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 20460, 10969], "heuristic_cost": [0, 0, 0], "full_cost": [0, 20460, 10969]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 20429, 10973], "heuristic_cost": [0, 0, 0], "full_cost": [0, 20429, 10973]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 20343, 10980], "heuristic_cost": [0, 0, 0], "full_cost": [0, 20343, 10980]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 20253, 10991], "heuristic_cost": [0, 0, 0], "full_cost": [0, 20253, 10991]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 20180, 11000], "heuristic_cost": [0, 0, 0], "full_cost": [0, 20180, 11000]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 20090, 11011], "heuristic_cost": [0, 0, 0], "full_cost": [0, 20090, 11011]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 20043, 11018], "heuristic_cost": [0, 0, 0], "full_cost": [0, 20043, 11018]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19953, 11029], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19953, 11029]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19881, 11041], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19881, 11041]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19852, 11049], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19852, 11049]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19784, 11059], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19784, 11059]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19754, 11067], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19754, 11067]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19694, 11072], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19694, 11072]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19626, 11085], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19626, 11085]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19597, 11090], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19597, 11090]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19567, 11098], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19567, 11098]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19529, 11103], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19529, 11103]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19439, 11116], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19439, 11116]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19414, 11122], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19414, 11122]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19342, 11134], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19342, 11134]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19312, 11142], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19312, 11142]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19252, 11152], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19252, 11152]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19155, 11170], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19155, 11170]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19073, 11188], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19073, 11188]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 19044, 11198], "heuristic_cost": [0, 0, 0], "full_cost": [0, 19044, 11198]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18967, 11207], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18967, 11207]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18882, 11225], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18882, 11225]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18834, 11235], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18834, 11235]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18811, 11246], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18811, 11246]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18731, 11257], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18731, 11257]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18670, 11262], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18670, 11262]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18606, 11272], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18606, 11272]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18558, 11282], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18558, 11282]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18520, 11297], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18520, 11297]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18449, 11308], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18449, 11308]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18401, 11318], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18401, 11318]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18326, 11332], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18326, 11332]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18278, 11342], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18278, 11342]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18247, 11350], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18247, 11350]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18199, 11360], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18199, 11360]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18176, 11371], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18176, 11371]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18121, 11380], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18121, 11380]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18072, 11393], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18072, 11393]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 18010, 11407], "heuristic_cost": [0, 0, 0], "full_cost": [0, 18010, 11407]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 17974, 11415], "heuristic_cost": [0, 0, 0], "full_cost": [0, 17974, 11415]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 17919, 11428], "heuristic_cost": [0, 0, 0], "full_cost": [0, 17919, 11428]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 17822, 11446], "heuristic_cost": [0, 0, 0], "full_cost": [0, 17822, 11446]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 17769, 11458], "heuristic_cost": [0, 0, 0], "full_cost": [0, 17769, 11458]}
+{"id": 15496, "parent": -1, "cost_until_now": [0, 17711, 11479], "heuristic_cost": [0, 0, 0], "full_cost": [0, 17711, 11479]}
+-----End Single Example-----
+Started Query: 2/3
+Start Computing Heuristic
+Finish Computing Heuristic (3.7438s)
+
+Node expansion: 285721
+Runtime: 199.127
+{"id": 148231, "parent": -1, "cost_until_now": [0, 9694, 4898], "heuristic_cost": [0, 0, 0], "full_cost": [0, 9694, 4898]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 9583, 4907], "heuristic_cost": [0, 0, 0], "full_cost": [0, 9583, 4907]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 9378, 4921], "heuristic_cost": [0, 0, 0], "full_cost": [0, 9378, 4921]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 9267, 4930], "heuristic_cost": [0, 0, 0], "full_cost": [0, 9267, 4930]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 9183, 4943], "heuristic_cost": [0, 0, 0], "full_cost": [0, 9183, 4943]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 9124, 4948], "heuristic_cost": [0, 0, 0], "full_cost": [0, 9124, 4948]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 9060, 4960], "heuristic_cost": [0, 0, 0], "full_cost": [0, 9060, 4960]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 9001, 4965], "heuristic_cost": [0, 0, 0], "full_cost": [0, 9001, 4965]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8903, 4980], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8903, 4980]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8808, 4995], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8808, 4995]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8758, 5005], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8758, 5005]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8715, 5016], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8715, 5016]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8615, 5023], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8615, 5023]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8551, 5035], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8551, 5035]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8492, 5040], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8492, 5040]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8394, 5055], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8394, 5055]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8299, 5070], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8299, 5070]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8280, 5085], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8280, 5085]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8206, 5091], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8206, 5091]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8182, 5100], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8182, 5100]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8117, 5113], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8117, 5113]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8048, 5129], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8048, 5129]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 8000, 5143], "heuristic_cost": [0, 0, 0], "full_cost": [0, 8000, 5143]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7931, 5159], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7931, 5159]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7896, 5175], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7896, 5175]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7864, 5185], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7864, 5185]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7779, 5205], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7779, 5205]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7726, 5224], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7726, 5224]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7705, 5245], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7705, 5245]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7659, 5250], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7659, 5250]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7638, 5271], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7638, 5271]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7614, 5278], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7614, 5278]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7529, 5298], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7529, 5298]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7476, 5317], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7476, 5317]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7409, 5343], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7409, 5343]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7388, 5364], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7388, 5364]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7308, 5385], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7308, 5385]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7263, 5417], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7263, 5417]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7242, 5438], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7242, 5438]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7162, 5459], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7162, 5459]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7099, 5507], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7099, 5507]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7078, 5528], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7078, 5528]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7034, 5548], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7034, 5548]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 7026, 5575], "heuristic_cost": [0, 0, 0], "full_cost": [0, 7026, 5575]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6999, 5583], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6999, 5583]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6930, 5599], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6930, 5599]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6888, 5622], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6888, 5622]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6862, 5649], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6862, 5649]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6841, 5670], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6841, 5670]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6785, 5694], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6785, 5694]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6759, 5721], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6759, 5721]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6738, 5742], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6738, 5742]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6702, 5763], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6702, 5763]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6660, 5786], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6660, 5786]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6634, 5813], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6634, 5813]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6629, 5831], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6629, 5831]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6597, 5834], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6597, 5834]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6557, 5858], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6557, 5858]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6536, 5883], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6536, 5883]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6494, 5906], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6494, 5906]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6484, 5926], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6484, 5926]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6468, 5933], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6468, 5933]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6447, 5954], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6447, 5954]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6421, 5974], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6421, 5974]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6395, 6001], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6395, 6001]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6376, 6014], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6376, 6014]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6355, 6039], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6355, 6039]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6313, 6062], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6313, 6062]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6287, 6089], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6287, 6089]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6266, 6110], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6266, 6110]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6252, 6161], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6252, 6161]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6228, 6170], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6228, 6170]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6207, 6191], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6207, 6191]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6179, 6240], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6179, 6240]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6158, 6261], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6158, 6261]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6132, 6288], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6132, 6288]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6109, 6356], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6109, 6356]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6089, 6406], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6089, 6406]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6073, 6437], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6073, 6437]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6057, 6483], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6057, 6483]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6036, 6504], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6036, 6504]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6020, 6525], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6020, 6525]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 6010, 6531], "heuristic_cost": [0, 0, 0], "full_cost": [0, 6010, 6531]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5978, 6548], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5978, 6548]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5957, 6569], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5957, 6569]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5950, 6614], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5950, 6614]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5934, 6637], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5934, 6637]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5929, 6659], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5929, 6659]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5924, 6670], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5924, 6670]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5908, 6685], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5908, 6685]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5888, 6714], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5888, 6714]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5877, 6763], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5877, 6763]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5865, 6782], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5865, 6782]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5855, 6815], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5855, 6815]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5837, 6847], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5837, 6847]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5818, 6875], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5818, 6875]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5808, 6908], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5808, 6908]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5791, 6990], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5791, 6990]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5787, 6999], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5787, 6999]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5761, 7047], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5761, 7047]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5740, 7092], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5740, 7092]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5729, 7165], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5729, 7165]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5708, 7210], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5708, 7210]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5704, 7254], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5704, 7254]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5679, 7321], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5679, 7321]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5672, 7372], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5672, 7372]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5648, 7399], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5648, 7399]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5635, 7489], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5635, 7489]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5616, 7517], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5616, 7517]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5599, 7599], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5599, 7599]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5589, 7632], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5589, 7632]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5577, 7757], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5577, 7757]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5556, 7802], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5556, 7802]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5540, 7905], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5540, 7905]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5519, 7950], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5519, 7950]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5514, 8181], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5514, 8181]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5501, 8271], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5501, 8271]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5482, 8299], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5482, 8299]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5465, 8381], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5465, 8381]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5455, 8414], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5455, 8414]}
+{"id": 148231, "parent": -1, "cost_until_now": [0, 5443, 8733], "heuristic_cost": [0, 0, 0], "full_cost": [0, 5443, 8733]}
+-----End Single Example-----
+Started Query: 3/3
+Start Computing Heuristic
+Finish Computing Heuristic (3.32887s)
+
+Node expansion: 2008351
+Runtime: 602.664
+{"id": 248369, "parent": -1, "cost_until_now": [0, 29686, 16066], "heuristic_cost": [0, 0, 0], "full_cost": [0, 29686, 16066]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 29339, 16081], "heuristic_cost": [0, 0, 0], "full_cost": [0, 29339, 16081]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 29158, 16094], "heuristic_cost": [0, 0, 0], "full_cost": [0, 29158, 16094]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 29044, 16102], "heuristic_cost": [0, 0, 0], "full_cost": [0, 29044, 16102]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 28919, 16117], "heuristic_cost": [0, 0, 0], "full_cost": [0, 28919, 16117]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 28891, 16128], "heuristic_cost": [0, 0, 0], "full_cost": [0, 28891, 16128]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 28809, 16134], "heuristic_cost": [0, 0, 0], "full_cost": [0, 28809, 16134]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 28708, 16146], "heuristic_cost": [0, 0, 0], "full_cost": [0, 28708, 16146]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 28665, 16151], "heuristic_cost": [0, 0, 0], "full_cost": [0, 28665, 16151]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 28589, 16160], "heuristic_cost": [0, 0, 0], "full_cost": [0, 28589, 16160]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 28499, 16168], "heuristic_cost": [0, 0, 0], "full_cost": [0, 28499, 16168]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 28385, 16176], "heuristic_cost": [0, 0, 0], "full_cost": [0, 28385, 16176]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 28318, 16181], "heuristic_cost": [0, 0, 0], "full_cost": [0, 28318, 16181]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 28204, 16189], "heuristic_cost": [0, 0, 0], "full_cost": [0, 28204, 16189]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 28079, 16204], "heuristic_cost": [0, 0, 0], "full_cost": [0, 28079, 16204]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 27960, 16218], "heuristic_cost": [0, 0, 0], "full_cost": [0, 27960, 16218]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 27890, 16232], "heuristic_cost": [0, 0, 0], "full_cost": [0, 27890, 16232]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 27825, 16238], "heuristic_cost": [0, 0, 0], "full_cost": [0, 27825, 16238]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 27706, 16252], "heuristic_cost": [0, 0, 0], "full_cost": [0, 27706, 16252]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 27619, 16267], "heuristic_cost": [0, 0, 0], "full_cost": [0, 27619, 16267]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 27549, 16281], "heuristic_cost": [0, 0, 0], "full_cost": [0, 27549, 16281]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 27485, 16286], "heuristic_cost": [0, 0, 0], "full_cost": [0, 27485, 16286]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 27398, 16301], "heuristic_cost": [0, 0, 0], "full_cost": [0, 27398, 16301]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 27307, 16319], "heuristic_cost": [0, 0, 0], "full_cost": [0, 27307, 16319]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 27237, 16333], "heuristic_cost": [0, 0, 0], "full_cost": [0, 27237, 16333]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 27211, 16337], "heuristic_cost": [0, 0, 0], "full_cost": [0, 27211, 16337]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 27185, 16342], "heuristic_cost": [0, 0, 0], "full_cost": [0, 27185, 16342]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 27120, 16355], "heuristic_cost": [0, 0, 0], "full_cost": [0, 27120, 16355]}
+{"id": 248369, "parent": -1, "cost_until_now": [0, 27050, 16369], "heuristic_cost": [0, 0, 0], "full_cost": [0, 27050, 16369]}
+-----End Single Example-----
+
