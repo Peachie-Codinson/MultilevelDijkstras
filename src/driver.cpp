@@ -1,3 +1,4 @@
+#include <chrono>
 #include <iostream>
 #include <memory>
 #include <time.h>
@@ -34,15 +35,31 @@ const std::string output_path = "output/";
 const MergeStrategy DEFAULT_MERGE_STRATEGY = MergeStrategy::RANDOM;
 std::string alg_variant = "";
 
+// --trace: write each query's search order as JSON (for visualisation) with this path prefix.
+std::string trace_prefix = "";
+
+static void write_json_array(std::ostream& out, const std::vector<size_t>& values) {
+    out << '[';
+    for (size_t i = 0; i < values.size(); ++i) out << (i ? "," : "") << values[i];
+    out << ']';
+}
+
+static std::string trace_path(const std::string& algorithm, size_t source, size_t target) {
+    return trace_prefix + "." + algorithm + "." + std::to_string(source) + "-" + std::to_string(target) + ".json";
+}
+
 
 // Simple example to demonstarte the usage of the algorithm
 
 SolutionSet single_run_map(size_t graph_size, AdjacencyMatrix& graph, AdjacencyMatrix&inv_graph, size_t source, size_t target, std::ofstream& output, std::string algorithm, MergeStrategy ms, LoggerPtr logger, EPS &epsV, unsigned int time_limit, RulebookGraph& rgraph) {
     // Compute heuristic
     std::cout << "Start Computing Heuristic" << std::endl;
+    const auto heuristic_start = std::chrono::steady_clock::now();
     ShortestPathHeuristic sp_heuristic(target, graph_size, inv_graph);
     // sp_heuristic.set_all_to_zero();
-    std::cout << "Finish Computing Heuristic\n" << std::endl;
+    const double heuristic_seconds =
+        std::chrono::duration<double>(std::chrono::steady_clock::now() - heuristic_start).count();
+    std::cout << "Finish Computing Heuristic (" << heuristic_seconds << "s)\n" << std::endl;
 
     using std::placeholders::_1;
     Heuristic heuristic = std::bind( &ShortestPathHeuristic::operator(), sp_heuristic, _1);
@@ -78,9 +95,32 @@ SolutionSet single_run_map(size_t graph_size, AdjacencyMatrix& graph, AdjacencyM
         std::cerr << "unknown solver name" << std::endl;
         exit(-1);
     }
+    std::vector<size_t> trace;
+    const bool tracing = !trace_prefix.empty() && (algorithm == "RApex" || algorithm == "RApexNoDr");
+    if (tracing) ((RApexSearch*)solver.get())->set_trace(&trace);
+
     auto start =std::clock();
     (*solver)(source, target, heuristic, solutions, time_limit);
     runtime = std::clock() - start;
+
+    if (tracing) {
+        std::ofstream out(trace_path(algorithm, source, target));
+        out << "{\"algorithm\": \"" << algorithm << "\", \"source\": " << source << ", \"target\": " << target
+            << ", \"expanded\": ";
+        write_json_array(out, trace);
+        out << ", \"solutions\": [";
+        for (size_t i = 0; i < solutions.size(); ++i) {
+            std::vector<size_t> path;
+            for (NodePtr n = solutions[i]; n; n = n->parent) path.push_back(n->id);
+            std::reverse(path.begin(), path.end());
+            out << (i ? ", " : "") << "{\"cost\": ";
+            write_json_array(out, solutions[i]->g);
+            out << ", \"path\": ";
+            write_json_array(out, path);
+            out << "}";
+        }
+        out << "]}" << std::endl;
+    }
 
     std::cout << "Node expansion: " << solver->get_num_expansion() << std::endl;
     std::cout << "Runtime: " <<  ((double) runtime) / CLOCKS_PER_SEC<< std::endl;
@@ -100,7 +140,8 @@ SolutionSet single_run_map(size_t graph_size, AdjacencyMatrix& graph, AdjacencyM
            << num_gen << "\t"
            << num_exp << "\t"
            << solutions.size() << "\t"
-           << (double) runtime / CLOCKS_PER_SEC
+           << (double) runtime / CLOCKS_PER_SEC << "\t"
+           << heuristic_seconds // not part of the search time above
            << std::endl;
 
     std::cout << "-----End Single Example-----" << std::endl;
@@ -182,13 +223,49 @@ void run_query(size_t graph_size, std::vector<Edge> & edges, std::string query_f
     }
 
     if (algorithm == "MultiLevel") {
+        // Built once per graph and kept out of the per-query time, like RA*pex's adjacency lists.
+        const auto build_start = std::chrono::steady_clock::now();
+        const multi_level::Graph multi_level_graph(edges, graph_size);
+        multi_level::Solver multi_level_solver(multi_level_graph);
+        std::cout << "MultiLevel graph build: "
+                  << std::chrono::duration<double>(std::chrono::steady_clock::now() - build_start).count()
+                  << "s" << std::endl;
+        multi_level::Trace trace;
+        if (!trace_prefix.empty()) multi_level_solver.set_trace(&trace);
         size_t query_count = 0;
         for (const auto& [source, target] : queries) {
             ++query_count;
             auto result = multi_level_fork
-                ? multi_level::solve_fork(edges, graph_size, source, target, time_limit)
-                : multi_level::solve(edges, graph_size, source, target,
-                                     multi_level_order, time_limit);
+                ? multi_level_solver.solve_fork(source, target, time_limit)
+                : multi_level_solver.solve(source, target, multi_level_order, time_limit);
+            if (!trace_prefix.empty()) {
+                std::ofstream out(trace_path(algorithm, source, target));
+                auto lists = [&](const char* name, const std::vector<std::vector<size_t>>& v) {
+                    out << ", \"" << name << "\": [";
+                    for (size_t i = 0; i < v.size(); ++i) { out << (i ? ", " : ""); write_json_array(out, v[i]); }
+                    out << "]";
+                };
+                out << "{\"algorithm\": \"MultiLevel\", \"source\": " << source << ", \"target\": " << target;
+                lists("forward", trace.forward);
+                lists("backward", trace.backward);
+                std::vector<std::vector<size_t>> kept_ends; // each pass: flat [u0, v0, u1, v1, ...]
+                for (const auto& pass : trace.kept) {
+                    kept_ends.emplace_back();
+                    for (size_t e : pass) { kept_ends.back().push_back(edges[e].source); kept_ends.back().push_back(edges[e].target); }
+                }
+                lists("kept", kept_ends);
+                out << ", \"pareto\": ";
+                write_json_array(out, trace.pareto);
+                out << ", \"solutions\": [";
+                for (size_t i = 0; i < trace.paths.size(); ++i) {
+                    out << (i ? ", " : "") << "{\"cost\": ";
+                    write_json_array(out, trace.path_costs[i]);
+                    out << ", \"path\": ";
+                    write_json_array(out, trace.paths[i]);
+                    out << "}";
+                }
+                out << "]}" << std::endl;
+            }
             const std::string path = output_file + ".q" + std::to_string(query_count) + ".edges";
             if (result.reachable) multi_level::write_subgraph(path, edges, result);
             const std::string solutions_path = output_file + ".q" + std::to_string(query_count) + ".solutions.txt";
@@ -206,7 +283,13 @@ void run_query(size_t graph_size, std::vector<Edge> & edges, std::string query_f
                   << result.solutions.size() << '\t' << result.seconds << '\t'
                   << result.optimal_edges.size() << '\t'
                   << (result.reachable ? path : "-") << '\t' << solutions_path
-                  << '\t' << (result.timed_out ? "TIMEOUT" : "COMPLETE") << '\n';
+                  << '\t' << (result.timed_out ? "TIMEOUT" : "COMPLETE");
+            // subgraph size per pass, "total>after pass 1>...", then fork label counts
+            stats << '\t' << edges.size();
+            for (size_t e : result.pass_edges) stats << '>' << e;
+            stats << '\t' << graph_size;
+            for (size_t v : result.pass_vertices) stats << '>' << v;
+            stats << '\t' << result.labels_created << '/' << result.labels_rejected << '\n';
         }
         return;
     }
@@ -233,8 +316,12 @@ void run_query(size_t graph_size, std::vector<Edge> & edges, std::string query_f
     }
 
     // Build the graph for all other algorithms
+    const auto build_start = std::chrono::steady_clock::now();
     AdjacencyMatrix graph(graph_size, edges);
     AdjacencyMatrix inv_graph(graph_size, edges, true);
+    std::cout << "RA*pex graph build: "
+              << std::chrono::duration<double>(std::chrono::steady_clock::now() - build_start).count()
+              << "s" << std::endl;
 
     size_t query_count = 0;
     for (auto iter = queries.begin(); iter != queries.end(); ++iter) {
@@ -270,6 +357,7 @@ int main(int argc, char** argv){
         ("cutoffTime,t", po::value<int>()->default_value(300), "cutoff time (seconds)")
         ("output,o", po::value<std::string>()->required(), "Name of the output file")
         ("logging_file", po::value<std::string>()->default_value(""), "logging file" )
+        ("trace", po::value<std::string>()->default_value(""), "write each query's search order as <prefix>.<algorithm>.<source>-<target>.json (MultiLevel, RApex)")
         // ("start,s", po::value<int>()->default_value(-1), "start location")
         // ("goal,g", po::value<int>()->default_value(-1), "goal location")
         // ("eps,e", po::value<double>()->default_value(0), "approximation factor")
@@ -295,6 +383,9 @@ int main(int argc, char** argv){
     // }
 
     LoggerPtr logger = nullptr;
+
+    trace_prefix = vm["trace"].as<std::string>();
+    RealizationPair::keep_paths = !trace_prefix.empty(); // RA*pex solution paths are only needed for traces
 
     if (vm["logging_file"].as<std::string>() != ""){
         logger = new Logger(vm["logging_file"].as<std::string>());

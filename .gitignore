@@ -1,0 +1,11 @@
+# Benchmark logs and intermediate files; only summaries, charts and GIFs are results.
+bench/**/chunk*/
+bench/*.log
+bench/*.log.err
+bench/**/trace.*.json
+bench/**/*_stats.txt
+bench/**/*_stats.txt.*
+bench/**/*.edges
+
+# Generated graphs (recreate with gen_random_graph.py)
+resources/random/

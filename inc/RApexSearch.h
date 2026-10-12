@@ -24,6 +24,7 @@ protected:
     bool is_dominated(RealizationPairPtr ap, bool transferFlag);
     void merge_to_solutions(const RealizationPairPtr &pp, RealizationSolutionSet &solutions);
     std::vector<std::vector<RealizationPairPtr>> expanded;
+    std::vector<size_t>* trace_expanded = nullptr; // optional: vertex of every expansion, in order
     void init_search() override;
 
 public:
@@ -33,6 +34,7 @@ public:
     void set_noDr(bool new_noDr){noDr = new_noDr;}
     void set_merge_strategy(MergeStrategy new_ms){ms = new_ms;}
     void set_rulebook_graph(const RulebookGraph& new_graph) { rulebook_graph = new_graph; }
+    void set_trace(std::vector<size_t>* trace) { trace_expanded = trace; }
     RApexSearch(const AdjacencyMatrix &adj_matrix, EPS eps, const LoggerPtr logger=nullptr);
     virtual void operator()(size_t source, size_t target, Heuristic &heuristic, SolutionSet &solutions, unsigned int time_limit=UINT_MAX) override;
 };

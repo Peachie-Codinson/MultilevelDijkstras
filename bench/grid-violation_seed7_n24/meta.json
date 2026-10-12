@@ -1,0 +1,16 @@
+{
+  "graph": "grid-violation",
+  "seed": 7,
+  "queries": 24,
+  "cutoff": 120,
+  "jobs": 8,
+  "graph_build_seconds": {
+    "MultiLevel": 0.30811475,
+    "RA*pex": 1.8084799999999999
+  },
+  "maps": [
+    "C:\\CPP_Projects\\Rulebook_approximation\\resources\\random\\grid500x500_violation_s1\\r1.gr",
+    "C:\\CPP_Projects\\Rulebook_approximation\\resources\\random\\grid500x500_violation_s1\\r2.gr",
+    "C:\\CPP_Projects\\Rulebook_approximation\\resources\\random\\grid500x500_violation_s1\\r3.gr"
+  ]
+}
