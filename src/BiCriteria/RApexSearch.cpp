@@ -118,6 +118,7 @@ void RApexSearch::operator()(size_t source, size_t target, Heuristic &heuristic,
         local_dom_checker->add_node(rp);
 
         num_expansion += 1;
+        if (trace_expanded) trace_expanded->push_back(rp->id);
 
         expanded[rp->id].push_back(rp);
 

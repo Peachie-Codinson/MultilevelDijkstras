@@ -1,6 +1,8 @@
 
 #include "Utils/Definitions.h"
 
+bool RealizationPair::keep_paths = false;
+
 // return true if node dom ape x
 // bool is_dominated_dr(NodePtr rule_apex, NodePtr node){
 //     for (int i = 1; i < rule_apex->f.size(); i ++ ){
@@ -46,7 +48,8 @@ RealizationPair::RealizationPair(const RealizationPairPtr parent, const Edge&  e
     }
     auto new_h = h(next_id);
     this->rule_apex = std::make_shared<Node>(next_id, new_rule_apex_g, new_h, nullptr, parent->rule_apex->rulebook_graph);
-    this->realization = std::make_shared<Node>(next_id, new_g, new_h, nullptr, parent->realization->rulebook_graph);
+    this->realization = std::make_shared<Node>(next_id, new_g, new_h, keep_paths ? parent->realization : nullptr,
+                                               parent->realization->rulebook_graph);
 }
 
 bool RealizationPair::update_nodes_by_merge_if_bounded(const RealizationPairPtr &other, const std::vector<double> eps, MergeStrategy s){
